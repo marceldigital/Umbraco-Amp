@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>MarcelDigital.Umbraco.Amp</id>
+    <version>1.0.0</version>
+    <authors>Marcel Digital</authors>
+    <owners>Marcel Digital</owners>
+    <iconUrl>http://marceldigital.blob.core.windows.net/nuget/logo-64x64.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <description>
+      Umbraco extension create Google AMP pages for content.
+      
+      Provides an AMP layout boilerplate (/Views/Shared/_LayoutAmp.cshtml) to base AMP pages off of.
+      
+      Creates an Amp template in Umbraco so that you can start creating amp pages off of the alternate
+      template url in order to have Amp and traditional pages side by side. (Ex: something.org/my-content/amp)
+      
+      Use the custom controller RenderAmpMvcController to unlock multiple templates off of the alternate template route.
+      Put AMP views in /Views/Amp and name them off of the document type alias which you want to create an AMP view for.
+    
+      To make it the default controller, add this to the OnApplicationStarting method on a class implementing IApplicationEventHandler:
+      DefaultRenderMvcControllerResolver.Current.SetDefaultControllerType(typeof(RenderAmpMvcController));
+    </description>
+    <releaseNotes>Initial Release.</releaseNotes>
+    <copyright>Copyright ©2017 Marcel Digital</copyright>
+    <tags>Umbraco AMP</tags>
+    <dependencies>
+      <dependency id="UmbracoCms.Core" version="7.4" />
+      <dependency id="MarcelDigital.UmbracoExtensions.Bootstrapper" version="1.2.0"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Content\**\*" target="content" />
+  </files>
+</package>
