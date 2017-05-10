@@ -270,6 +270,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\RenderAmpMvcController.cs" />
+    <Compile Include="Converters\AmpIframeConverter.cs" />
     <Compile Include="Converters\AmpImgConverter.cs" />
     <Compile Include="Converters\IAmpHtmlConverter.cs" />
     <Compile Include="Exceptions\InvalidAmpConversionException.cs" />

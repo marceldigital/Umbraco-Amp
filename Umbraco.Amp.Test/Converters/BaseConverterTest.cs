@@ -7,29 +7,28 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace MarcelDigital.Umbraco.Amp.Test.Converters {
     public abstract class BaseConverterTest {
         protected HtmlDocument HtmlDocument;
-        protected IAmpHtmlConverter Converter;
+        protected IAmpHtmlConverter Sut;
 
-
-        [TestInitialize]
-        public void Setup() {
+        public void Scaffold(IAmpHtmlConverter sut) {
             HtmlDocument = new HtmlDocument();
-            Converter = new AmpImgConverter();
+            Sut = sut;
         }
 
         [TestCleanup]
         public void Teardown() {
             HtmlDocument = null;
+            Sut = null;
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
         public void TestConvertNullArg() {
-            Converter.Convert(null);
+            Sut.Convert(null);
         }
 
         [TestMethod, ExpectedException(typeof(InvalidAmpConversionException))]
         public void TestConvertNoImgTag() {
             var node = HtmlDocument.CreateElement("tag");
-            Converter.Convert(node);
+            Sut.Convert(node);
         }
     }
 }

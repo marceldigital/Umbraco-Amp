@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Converters\AmpImgConverterTest.cs" />
     <Compile Include="Converters\BaseConverterTest.cs" />
+    <Compile Include="Converters\AmpIframeConverterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

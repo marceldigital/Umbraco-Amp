@@ -12,18 +12,23 @@ namespace MarcelDigital.Umbraco.Amp.Test.Converters {
         private const string Height = "height";
         private const string AmpComponentName = "amp-img";
 
+        [TestInitialize]
+        public void Setup() {
+            Scaffold(new AmpImgConverter());
+        }
+
         [TestMethod]
         public void TestConvertImgTagWithDimensionsInTag() {
-            const string actual = "200";
+            const string numberOfPixels = "200";
             var node = HtmlDocument.CreateElement(ImgTagName);
-            node.Attributes.Add(Width, actual);
-            node.Attributes.Add(Height, actual);
+            node.Attributes.Add(Width, numberOfPixels);
+            node.Attributes.Add(Height, numberOfPixels);
 
-            Converter.Convert(node);
+            Sut.Convert(node);
 
-            Assert.AreEqual(node.Name, AmpComponentName);
-            Assert.AreEqual(node.GetAttributeValue(Width, "0"), actual);
-            Assert.AreEqual(node.GetAttributeValue(Height, "0"), actual);
+            Assert.AreEqual(AmpComponentName, node.Name);
+            Assert.AreEqual(numberOfPixels, node.GetAttributeValue(Width, "0"));
+            Assert.AreEqual(numberOfPixels, node.GetAttributeValue(Height, "0"));
         }
 
         [TestMethod]
@@ -31,11 +36,11 @@ namespace MarcelDigital.Umbraco.Amp.Test.Converters {
             var node = HtmlDocument.CreateElement(ImgTagName);
             node.Attributes.Add("src", "/website-media/3030/banner.jpg?anchor=center&mode=crop&width=730&height=380&rnd=130995077200000000");
 
-            Converter.Convert(node);
+            Sut.Convert(node);
 
-            Assert.AreEqual(node.Name, AmpComponentName);
-            Assert.AreEqual(node.GetAttributeValue(Width, "0"), "730");
-            Assert.AreEqual(node.GetAttributeValue(Height, "0"), "380");
+            Assert.AreEqual(AmpComponentName, node.Name);
+            Assert.AreEqual("730", node.GetAttributeValue(Width, "0"));
+            Assert.AreEqual("380", node.GetAttributeValue(Height, "0"));
         }
 
         [TestMethod]
@@ -45,7 +50,7 @@ namespace MarcelDigital.Umbraco.Amp.Test.Converters {
             parentNode.AppendChild(node);
             node.Attributes.Add("src", "/website-media/3030/banner.jpg");
 
-            Converter.Convert(node);
+            Sut.Convert(node);
 
             Assert.IsNull(node.ParentNode);
         }
