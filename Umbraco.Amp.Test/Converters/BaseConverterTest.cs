@@ -26,7 +26,7 @@ namespace MarcelDigital.Umbraco.Amp.Test.Converters {
         }
 
         [TestMethod, ExpectedException(typeof(InvalidAmpConversionException))]
-        public void TestConvertNoImgTag() {
+        public void TestConvertNotRightTag() {
             var node = HtmlDocument.CreateElement("tag");
             Sut.Convert(node);
         }

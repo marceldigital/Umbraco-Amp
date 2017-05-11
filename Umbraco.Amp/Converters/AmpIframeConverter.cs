@@ -5,18 +5,14 @@ using MarcelDigital.Umbraco.Amp.Exceptions;
 
 namespace MarcelDigital.Umbraco.Amp.Converters {
     internal class AmpIframeConverter : IAmpHtmlConverter {
-        private static readonly string[] RequiredSandboxValueValues = {
-            "allow-scripts",
-            "allow-same-origin"
-        };
-
         private const string SandboxAttributeName = "sandbox";
 
         public string HtmlTag => "iframe";
         public string AmpComponent => "amp-iframe";
 
         /// <summary>
-        ///     Converts an HTML iframe element into a amp-iframe component.
+        ///     Converts an HTML iframe element into a amp-iframe component. If the required sandbox attrbute is not present on the
+        ///     iframe tag it will be added with an empty value.
         /// </summary>
         /// <param name="node">The HTML node to convert to an amp-iframe.</param>
         public void Convert(HtmlNode node) {
@@ -25,43 +21,17 @@ namespace MarcelDigital.Umbraco.Amp.Converters {
 
             node.Name = AmpComponent;
 
-            if (HasCorrectSandboxValue(node)) return;
-            // It's missing the required sandbox value, add it
-            SetRequiredSandboxValue(node);
+            AddSandoxAttributeIfMissing(node);
         }
 
         /// <summary>
-        ///     Checks to see if the node already has the correct sandbox value for an AMP iframe
+        ///     Adds the requred sandbox attribute if it is missing.
         /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        private static bool HasCorrectSandboxValue(HtmlNode node) {
-            var sandboxValueTokens = SplitSandboxValueIntoValues(node);
-            return sandboxValueTokens.Intersect(RequiredSandboxValueValues).Count() == RequiredSandboxValueValues.Length;
-        }
-
-        /// <summary>
-        ///     Sets the required value for sandbox on the node.
-        /// </summary>
-        /// <param name="node">The node to set the sandbox value for.</param>
-        private static void SetRequiredSandboxValue(HtmlNode node) {
-            var currentSandboxValues = SplitSandboxValueIntoValues(node).ToList();
-            foreach (var requiredSandboxValueValue in RequiredSandboxValueValues) {
-                if (!currentSandboxValues.Contains(requiredSandboxValueValue)) {
-                    currentSandboxValues.Add(requiredSandboxValueValue);
-                }
+        /// <param name="node">The node to add the attribute to.</param>
+        private static void AddSandoxAttributeIfMissing(HtmlNode node) {
+            if (!node.Attributes.Contains(SandboxAttributeName)) {
+                node.Attributes.Add(SandboxAttributeName, "");
             }
-            node.Attributes.Add(SandboxAttributeName, string.Join(" ", currentSandboxValues));
         }
-
-        /// <summary>
-        ///     Splits the value of an attribute by spaces.
-        /// </summary>
-        /// <param name="attributeValue"></param>
-        /// <returns></returns>
-        private static string[] SplitSandboxValueIntoValues(HtmlNode node)
-            =>
-                node.GetAttributeValue(SandboxAttributeName, "")
-                    .Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
     }
 }
