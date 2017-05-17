@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace MarcelDigital.Umbraco.Amp.Test.Converters {
     [TestClass]
     public class AmpIframeConverterTest : BaseConverterTest {
-        private const string SandboxAttribuiteName = "sandbox";
+        private const string SandboxAttributeName = "sandbox";
         private const string IframeElementName = "iframe";
         private const string AmpComponentName = "amp-iframe";
 
@@ -22,17 +22,17 @@ namespace MarcelDigital.Umbraco.Amp.Test.Converters {
 
             Assert.AreEqual(AmpComponentName, node.Name);
             Assert.IsTrue(node.HasAttributes);
-            Assert.AreEqual("", node.GetAttributeValue( SandboxAttribuiteName, "missing"));
+            Assert.AreEqual("", node.GetAttributeValue( SandboxAttributeName, "missing"));
         }
 
         [TestMethod]
         public void RequiredSandboxAttribute() {
             var node = HtmlDocument.CreateElement(IframeElementName);
-            node.Attributes.Add(SandboxAttribuiteName, "allow-scripts allow-same-origin");
+            node.Attributes.Add(SandboxAttributeName, "allow-scripts allow-same-origin");
             Sut.Convert(node);
 
             Assert.AreEqual(AmpComponentName, node.Name);
-            Assert.AreEqual("allow-scripts allow-same-origin", node.GetAttributeValue(SandboxAttribuiteName, "missing"));
+            Assert.AreEqual("allow-scripts allow-same-origin", node.GetAttributeValue(SandboxAttributeName, "missing"));
         }
     }
 }
