@@ -32,7 +32,7 @@ namespace MarcelDigital.Umbraco.Amp.Test.Converters {
         }
 
         [TestMethod]
-        public void TestConvertImgWithDimensoinsInSrc() {
+        public void TestConvertImgWithDimensionsInSrc() {
             var node = HtmlDocument.CreateElement(ImgTagName);
             node.Attributes.Add("src", "/website-media/3030/banner.jpg?anchor=center&mode=crop&width=730&height=380&rnd=130995077200000000");
 
